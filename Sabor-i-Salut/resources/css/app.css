@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+/* resources/css/app.css */
+.custom-btn {
+    background-color: #ff5733; /* Exemple de color personalitzat */
+    color: white;
+    padding: 12px 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+}
+
+.custom-btn:hover {
+    background-color: #e04e2f; /* Un to més fosc per a l'efecte hover */
+}

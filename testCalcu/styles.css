@@ -1,0 +1,39 @@
+body {
+  font-family: sans-serif;
+  background: #f0f8ff;
+  padding: 2rem;
+  max-width: 500px;
+  margin: auto;
+}
+
+h1 {
+  text-align: center;
+}
+
+label {
+  display: block;
+  margin-top: 1rem;
+}
+
+select, input {
+  width: 100%;
+  padding: 0.5rem;
+  margin-top: 0.3rem;
+}
+
+button {
+  margin-top: 1.5rem;
+  padding: 0.8rem;
+  width: 100%;
+  background: #00bfff;
+  color: white;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.resultado {
+  margin-top: 2rem;
+  font-size: 1.2rem;
+  text-align: center;
+}

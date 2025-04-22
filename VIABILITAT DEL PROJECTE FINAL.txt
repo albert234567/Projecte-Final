@@ -1,0 +1,34 @@
+1- Per a qui creem valor?
+Per als nutricionistes, que són a qui ajudem a compartir tots els seus menús, i als usuaris mitjançant la comunicació amb els nutricionistes.
+
+2- Quin problema dels nostres clients ajudem a solucionar?
+La falta de comunicació i l'accessibilitat entre nutricionistes i clients, que poden compartir i rebre receptes fàcilment.
+
+3- Quin cost inicial té posar en marxa el projecte?
+El cost inicial estaria entre uns 500€, tenint en compte la VPS, el domini i els nostres serveis de desenvolupament.
+
+4- Per quin valor preveiem que estan disposats a pagar els nostres clients?
+Fent una estimació del que val un servei d'un nutricionista, pensem que amb un cost mensual de 50€ per nutricionista, ell serà capaç de pagar-ho sense problema, ja que amb un sol client ho pot mantenir.
+Així, amb que el nutricionista tingui un client, ja podria mantenir el nostre servei.
+
+5- Quins són els productes i serveis que penses oferir?
+Oferim una aplicació amb fàcil accés per a compartir i recomanar menús als clients dels nutricionistes, i amb l'exploració de noves receptes.
+
+6- Quina serà la teva possible competència?
+Actualment no tenim cap competència a la vista, ja que és un camp poc sol·licitat i innovador.
+
+7- Quin serà el preu de cost i el preu de venda del teu producte i servei?
+El preu de cost que estimem és d'uns 2000€ a l'any per mantenir la VPS, el domini i les futures actualitzacions, amb la restauració de possibles errors.
+El preu de venda serà de 50€ per als nutricionistes i 0€ per als usuaris.
+Estimem uns 20 nutricionistes nous anuals per poder mantenir l'aplicació en funcionament.
+
+8- Quins canals de distribució utilitzaràs?
+Podríem utilitzar diversos canals digitals, com xarxes socials (Instagram, Facebook, TikTok), publicitat en línia (Google Ads), col·laboracions amb nutricionistes i influenciadors de salut; això últim seria més endavant.
+
+9- Com et donaràs a conèixer?
+Ens donarem a conèixer mitjançant campanyes de màrqueting digital, enfocant-nos en la creació de contingut útil sobre nutrició i salut, i establint aliances amb nutricionistes influents que puguin recomanar la nostra aplicació als seus clients. També podem utilitzar publicitat pagada i oferir promocions especials per atreure usuaris inicials.
+
+10- Has previst els ingressos i despeses del primer any?
+Segons la previsió d'ingressos, estimem uns 50 usuaris nous el primer any, amb una mitjana de 6 mesos de subscripció. En total serien uns 6000€ el primer any, que, restant els 2000€ de manteniment total, ens quedarien uns 4000€ bruts per nosaltres.
+En cas que tot funcioni correctament, en 5 anys, amb els patrocinis adequats, podem estimar uns 700 usuaris recurrents, la qual cosa proporcionaria 420.000€.
+

@@ -1,0 +1,153 @@
+1. Parts del pressupost
+
+Introducció: Aquest projecte té com a objectiu el desenvolupament i implementació d'una aplicació que permeti als nutricionistes compartir menús i receptes amb els seus clients, millorant la comunicació i l'accessibilitat entre ells. La necessitat del client radica en millorar la gestió i la relació amb els usuaris, optimitzant els processos i oferint eines digitals modernes per a una millor interacció.
+
+Objectius:
+
+Crear una plataforma accessible per als nutricionistes i els seus clients.
+
+Facilitar la creació, compartició i recomanació de menús i receptes.
+
+Millorar la comunicació entre nutricionistes i clients mitjançant una aplicació eficient.
+
+Ofereir un servei de fàcil usabilitat que ajudi a incrementar la productivitat dels nutricionistes i la satisfacció dels seus clients.
+
+Detall del projecte:
+
+Materials necessaris:
+
+Servidors per a la VPS.
+
+Llicències per al domini web.
+
+Eines de desenvolupament de programari per crear l'aplicació.
+
+Disseny gràfic per a la interfície d'usuari.
+
+Mà d'obra (hores estimades de treball):
+
+Desenvolupament del backend (120 hores).
+
+Disseny i desenvolupament del frontend (80 hores).
+
+Proves i ajustos finals (40 hores).
+
+Suport inicial (30 hores).
+
+Configuració i proves:
+
+Instal·lació i configuració del servidor VPS.
+
+Proves de funcionalitat, seguretat i usabilitat.
+
+Suport i manteniment:
+
+Suport tècnic durant el primer any (24 hores de servei al mes).
+
+Actualitzacions regulars de l'aplicació per a millores i correccions de seguretat.
+
+Pressupost desglossat:
+
+Element	Cost (€)
+VPS i domini	500
+Desenvolupament de l'aplicació	2.000
+Disseny gràfic i UX/UI	800
+Proves i ajustos	400
+Suport tècnic anual	1.200
+Total	4.900
+Terminis:
+
+Fase 1: Disseny i desenvolupament: 2 mesos
+
+Fase 2: Proves i ajustos finals: 1 mes
+
+Fase 3: Lançament i suport inicial: 1 mes
+
+Fase 4: Manteniment continu: Any següent
+
+Condicions:
+
+Pagament inicial del 50% al començament del projecte.
+
+Pagament final del 50% en finalitzar el projecte.
+
+El pressupost té una validesa de 30 dies.
+
+2. Càlcul dels costos
+
+Materials:
+
+VPS i domini: 500€
+
+Llicències de programari i eines de desenvolupament: 300€
+
+Mà d'obra:
+
+Desenvolupament backend (120 hores) a 25€/hora: 3.000€
+
+Desenvolupament frontend (80 hores) a 25€/hora: 2.000€
+
+Disseny gràfic i UX/UI (40 hores) a 20€/hora: 800€
+
+Proves i ajustos (40 hores) a 20€/hora: 800€
+
+Despeses addicionals:
+
+Transport i despeses de gestió (consultor de suport): 200€
+
+Impostos i beneficis:
+
+IVA (21%): 1.199,70€
+
+Benefici estimat: 10% del cost total: 1.070€
+
+Preu total:
+
+Materials + Mà d'obra + Despeses addicionals: 8.300€
+
+IVA: 1.199,70€
+
+Benefici: 1.070€
+
+Preu total: 10.569,70€
+
+Càlcul del cost per hora:
+
+Despeses fixes mensuals: 600€ (lloguer oficina, connexió a internet, llicències de programari, etc.)
+
+Despeses variables mensuals: 400€ (material de treball, transport)
+
+Total despeses mensuals: 1.000€
+
+Hores treballables per setmana: 35 hores
+
+Hores treballables per any: 35 * 50 = 1.750 hores
+
+Cost per hora:
+
+Despeses anuals: 12.000€ (despeses fixes i variables)
+
+Total d'hores anuals: 1.750 hores
+
+Cost per hora: (12.000€ + salari desitjat de 20.000€) / 1.750 hores = 18,29€/hora
+
+3. Presentació del pressupost
+
+Per a una presentació clara i professional del pressupost:
+
+Introducció del pressupost: Comencem amb una descripció breu del projecte, destacant l'objectiu de crear una aplicació accessible per als nutricionistes per millorar la seva comunicació amb els clients. S'inclou també una breu menció del cost associat i la raó de cada partida.
+
+Organització del pressupost: Es presenten totes les despeses i costos detallats en una taula ben estructurada per facilitar la comprensió, amb un desglose de cada element: materials, mà d'obra, despeses addicionals, impostos i beneficis.
+
+Condicions i termini de pagament: Es detallen les condicions de pagament (50% al començament i 50% al final), així com les dates de les fases del projecte, per garantir la transparència i confiança amb el client.
+
+Document tècnic adjunt: S'adjunta un document tècnic amb els detalls detallats sobre les especificacions de l'aplicació, com el disseny i les funcionalitats, per oferir una visió més clara de les tasques i requeriments tècnics.
+
+Amb aquest enfocament, es garanteix que el pressupost és clar, transparent i fàcil d'entendre per al client, amb totes les dades detallades sobre els costos, els temps i les condicions.
+
+
+
+
+
+
+
