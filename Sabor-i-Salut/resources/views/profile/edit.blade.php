@@ -44,32 +44,5 @@
         @method('DELETE')
         <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded">Eliminar el teu compte</button>
     </form>
-
-    <!-- Secció per mostrar els menús segons el rol -->
-    <div class="mt-8">
-        @if($user->rol === 'nutricionista')
-            <h2 class="text-xl font-semibold">Els teus menús creats</h2>
-            <p>Com a nutricionista, pots crear menús per als teus clients.</p>
-            <a href="{{ route('menus.create') }}" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">Crear Menú</a>
-        @else
-            <h2 class="text-xl font-semibold">Els teus menús assignats</h2>
-
-            @if($menus->isEmpty())
-                <p>No tens menús assignats.</p>
-            @else
-                <ul>
-                    @foreach($menus as $menu)
-                        <li class="mb-4">
-                            <strong>{{ $menu->descripcio }}</strong>
-                            <br>
-                            Plats: {{ implode(', ', json_decode($menu->plats)) }}
-                            <br>
-                            Client: {{ $menu->client ? $menu->client->name : 'Cap client assignat' }}
-                        </li>
-                    @endforeach
-                </ul>
-            @endif
-        @endif
-    </div>
 </div>
 @endsection

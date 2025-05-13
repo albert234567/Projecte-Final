@@ -1,7 +1,5 @@
 <?php
 
-// app/Http/Controllers/DashboardController.php
-
 namespace App\Http\Controllers;
 
 use App\Models\Menu;
@@ -11,14 +9,16 @@ class DashboardController extends Controller
 {
     public function index()
     {
+        $user = Auth::user(); // ✅ Captura l'usuari autenticat
+
         // Obtenim els menús segons el rol de l'usuari
-        if (Auth::user()->rol === 'nutricionista') {
-            $menus = Menu::where('nutricionista_id', Auth::id())->get();
+        if ($user->rol === 'nutricionista') {
+            $menus = Menu::where('nutricionista_id', $user->id)->get();
         } else {
-            $menus = Menu::where('client_id', Auth::id())->get();
+            $menus = Menu::where('client_id', $user->id)->get();
         }
 
-        // Retornem la vista del dashboard amb la variable $menus
-        return view('dashboard', compact('menus'));
+        // Passem $user i $menus a la vista
+        return view('dashboard', compact('menus', 'user'));
     }
 }

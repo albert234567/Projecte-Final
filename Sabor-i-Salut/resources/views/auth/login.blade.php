@@ -1,47 +1,136 @@
-<x-guest-layout>
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        /* Estils personals */
+        :root {
+            --primary: #4CAF50;
+            --light: #ffffff;
+            --bg-color: #f8f8f8;
+        }
 
-    <form method="POST" action="{{ route('login') }}">
-        @csrf
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+        }
 
-        <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+        .auth-container {
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: var(--light);
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .auth-container h2 {
+            text-align: center;
+            font-size: 2rem;
+            color: var(--primary);
+        }
+
+        .auth-container form {
+            margin-top: 20px;
+        }
+
+        .auth-container .form-group {
+            margin-bottom: 15px;
+        }
+
+        /* Estils per a les caixes d'entrada */
+        .auth-container .form-group input {
+            width: 80%;  /* Ajusta l'amplada de les caixes d'entrada a 80% */
+            padding: 8px; /* Menys padding per fer les caixes més petites */
+            margin-top: 5px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 0.9rem; /* Redueix la mida de la font */
+        }
+
+        .auth-container .form-group label {
+            display: block; /* Fa que l'etiqueta es mostri a la línia següent */
+            margin-bottom: 5px; /* Afegim una mica d'espai entre l'etiqueta i el input */
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: var(--light);
+            padding: 12px 24px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn-primary:hover {
+            background-color: #388E3C;
+        }
+
+        .link-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .link-container a {
+            text-decoration: none;
+            padding: 10px 20px;
+            color: white;
+            background-color:rgb(32, 57, 93);
+            border-radius: 5px;
+            margin: 5px;
+        }
+
+        .link-container a:hover {
+            background-color:rgb(32, 57, 93);
+        }
+
+        /* Centra els formularis */
+        .form-group {
+            margin-bottom: 15px;
+            text-align: center;
+        }    </style>
+</head>
+<body>
+
+    <!-- Formulari de Login -->
+    <div class="auth-container">
+        <h2>Inicia Sessió</h2>
+        <form method="POST" action="/login">
+            <!-- CSRF Token -->
+            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Contrasenya</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+
+            <div class="form-group">
+                <label for="remember_me">Recorda'm</label>
+                <input type="checkbox" id="remember_me" name="remember">
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn-primary">Iniciar Sessió</button>
+            </div>
+        </form>
+
+        <div class="link-container">
+            <a href="/">⬅️ Anar a la Benvinguda</a>
+            <a href="/register">Registrar-se➡️</a>
         </div>
+    </div>
 
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
-
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="current-password" />
-
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
-
-        <!-- Remember Me -->
-        <div class="block mt-4">
-            <label for="remember_me" class="inline-flex items-center">
-                <input id="remember_me" type="checkbox" class="rounded dark:bg-gray-900 border-gray-300 dark:border-gray-700 text-indigo-600 shadow-sm focus:ring-indigo-500 dark:focus:ring-indigo-600 dark:focus:ring-offset-gray-800" name="remember">
-                <span class="ms-2 text-sm text-gray-600 dark:text-gray-400">{{ __('Remember me') }}</span>
-            </label>
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
-            @if (Route::has('password.request'))
-                <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('password.request') }}">
-                    {{ __('Forgot your password?') }}
-                </a>
-            @endif
-
-            <x-primary-button class="ms-3">
-                {{ __('Log in') }}
-            </x-primary-button>
-        </div>
-    </form>
-</x-guest-layout>
+</body>
+</html>
