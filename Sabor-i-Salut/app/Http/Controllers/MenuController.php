@@ -11,6 +11,28 @@ use App\Models\User;
 
 class MenuController extends Controller
 {
+
+public function mostrarDashboard()
+{
+    $user = Auth::user();
+
+    if ($user->rol === 'nutricionista') {
+        $clients = User::where('rol', 'client')
+            ->where('nutricionista_id', $user->id)
+            ->with('menusRecomanats.nutricionista')
+            ->get();
+
+        $menusCreados = Menu::where('nutricionista_id', $user->id)->get(); // Recupera els menús creats
+
+        return view('dashboard', ['clients' => $clients, 'menusCreados' => $menusCreados]);
+    } else {
+        $menus = $user->menusRecomanats()->with('nutricionista')->get();
+        return view('dashboard', ['menus' => $menus]);
+    }
+}
+
+
+
     // Emmagatzemar el menú creat
     public function store(Request $request)
     {
@@ -52,19 +74,29 @@ class MenuController extends Controller
     // Llistar els menús creats pel nutricionista o assignats al client
     public function index()
     {
-        // Els nutricionistes veuen només els seus menús
-        if (Auth::user()->rol === 'nutricionista') {
-            $menus = Menu::where('nutricionista_id', Auth::id())->get();
+        $user = Auth::user();
+
+        if ($user->rol === 'nutricionista') {
+            // Obtenim tots els menús creats per aquest nutricionista
+            $menusCreados = Menu::where('nutricionista_id', $user->id)->get();
+
+            // Obtenim tots els clients que tenen algun menú assignat per aquest nutricionista
+            $clients = User::where('rol', 'client')
+                ->whereHas('menusAssigned', function ($query) use ($user) {
+                    $query->where('nutricionista_id', $user->id);
+                })
+                ->with('menusAssigned.nutricionista') // Carreguem la info del nutricionista per a aquests menús
+                ->get();
+
+            return view('dashboard', ['clients' => $clients, 'menusCreados' => $menusCreados]);
         } else {
-            // Els clients només veuen els menús assignats a ells
-            $menus = Menu::where('client_id', Auth::id())->get();
+            // Si l'usuari és un client, mostrem els menús que se li han assignat
+            $menus = $user->menusAssigned()->with('nutricionista')->get();
+            return view('dashboard', ['menus' => $menus]);
         }
-
-        // Passa també els clients per a assignar menús
-        $clients = User::where('rol', 'client')->get();
-
-        return view('menus.index', compact('menus', 'clients'));
     }
+
+
 
     // Eliminar un menú
     public function destroy(Menu $menu)

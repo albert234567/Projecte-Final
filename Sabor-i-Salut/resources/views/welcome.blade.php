@@ -1,4 +1,3 @@
-{{-- resources/views/welcome.blade.php --}}
 <!DOCTYPE html>
 <html lang="ca">
 <head>
@@ -61,10 +60,33 @@
         .buttons form button:hover {
             background-color: #388E3C;
         }
+
+        /* Estil per la imatge en el recuadre */
+        .image-container {
+            width: 100%;
+            height: 200px;
+            margin-bottom: 1.5rem;
+            border: 5px solid var(--primary);
+            border-radius: 15px;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+        }
     </style>
 </head>
 <body>
     <div class="container">
+        <!-- Imatge enmarcada al dalt -->
+        <div class="image-container">
+            <img src="{{ asset('img/Sabor_i_Salut2.png') }}" alt="Imatge de projecte">
+        </div>
+
         <h1>Sabor i Salut</h1>
         <p class="tagline">Fer el seguiment de la nutrició d'una manera fàcil i interactiva.</p>
 

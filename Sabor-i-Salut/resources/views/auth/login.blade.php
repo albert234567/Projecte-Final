@@ -17,56 +17,69 @@
             margin: 0;
             padding: 0;
             background-color: var(--bg-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #333;
         }
 
         .auth-container {
-            max-width: 400px;
-            margin: 50px auto;
-            padding: 20px;
+            text-align: center;
+            border: 2px solid var(--primary);
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             background-color: var(--light);
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 90%;
         }
 
         .auth-container h2 {
-            text-align: center;
             font-size: 2rem;
             color: var(--primary);
+            margin-bottom: 1.5rem;
         }
 
         .auth-container form {
-            margin-top: 20px;
+            margin-top: 1.5rem;
         }
 
         .auth-container .form-group {
-            margin-bottom: 15px;
-        }
-
-        /* Estils per a les caixes d'entrada */
-        .auth-container .form-group input {
-            width: 80%;  /* Ajusta l'amplada de les caixes d'entrada a 80% */
-            padding: 8px; /* Menys padding per fer les caixes més petites */
-            margin-top: 5px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 0.9rem; /* Redueix la mida de la font */
+            margin-bottom: 1.5rem;
+            text-align: left;
         }
 
         .auth-container .form-group label {
-            display: block; /* Fa que l'etiqueta es mostri a la línia següent */
-            margin-bottom: 5px; /* Afegim una mica d'espai entre l'etiqueta i el input */
+            display: block;
+            margin-bottom: 8px;
             font-size: 1rem;
+            color: #333;
+        }
+
+        .auth-container .form-group input,
+        .auth-container .form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            font-size: 1rem;
+            box-sizing: border-box;
+            margin-top: 5px;
         }
 
         .btn-primary {
             background-color: var(--primary);
             color: var(--light);
-            padding: 12px 24px;
-            font-size: 1rem;
+            padding: 0.75rem 1.5rem;
             border: none;
-            border-radius: 5px;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 1rem;
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: background-color 0.3s ease;
+            width: 100%;
+            margin-top: 1.5rem;
         }
 
         .btn-primary:hover {
@@ -75,27 +88,25 @@
 
         .link-container {
             text-align: center;
-            margin-top: 20px;
+            margin-top: 1.5rem;
         }
 
         .link-container a {
             text-decoration: none;
-            padding: 10px 20px;
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
             color: white;
-            background-color:rgb(32, 57, 93);
-            border-radius: 5px;
+            background-color: rgb(238, 118, 26);
+            border-radius: 10px;
             margin: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
         }
 
         .link-container a:hover {
-            background-color:rgb(32, 57, 93);
+            background-color: rgb(200, 100, 20);
         }
-
-        /* Centra els formularis */
-        .form-group {
-            margin-bottom: 15px;
-            text-align: center;
-        }    </style>
+        </style>
 </head>
 <body>
 
@@ -117,14 +128,11 @@
             </div>
 
             <div class="form-group">
-                <label for="remember_me">Recorda'm</label>
-                <input type="checkbox" id="remember_me" name="remember">
-            </div>
-
-            <div class="form-group">
                 <button type="submit" class="btn-primary">Iniciar Sessió</button>
             </div>
         </form>
+
+            <br>
 
         <div class="link-container">
             <a href="/">⬅️ Anar a la Benvinguda</a>

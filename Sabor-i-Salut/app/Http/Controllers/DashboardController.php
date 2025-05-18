@@ -2,23 +2,36 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Menu;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
+use App\Models\Menu;
 
 class DashboardController extends Controller
 {
+    
     public function index()
     {
-        $user = Auth::user(); // ✅ Captura l'usuari autenticat
+        $user = Auth::user();
 
-        // Obtenim els menús segons el rol de l'usuari
         if ($user->rol === 'nutricionista') {
-            $menus = Menu::where('nutricionista_id', $user->id)->get();
-        } else {
-            $menus = Menu::where('client_id', $user->id)->get();
-        }
+            $menusCreadosPorCliente = Menu::where('nutricionista_id', $user->id)
+                ->get()
+                ->groupBy(function ($menu) {
+                    return $menu->client->name ?? 'Sense client assignat'; // Agrupa per el nom del client
+                });
 
-        // Passem $user i $menus a la vista
-        return view('dashboard', compact('menus', 'user'));
+            $clients = User::where('rol', 'client')
+                ->whereIn('id', Menu::where('nutricionista_id', $user->id)->pluck('client_id')->unique()->filter())
+                ->get();
+
+            return view('dashboard', [
+                'menusCreadosPorCliente' => $menusCreadosPorCliente,
+                'clients' => $clients,
+            ]);
+        } else {
+            $menus = $user->menusAssigned()->with('nutricionista')->get();
+            return view('dashboard', ['menus' => $menus]);
+        }
     }
+
 }

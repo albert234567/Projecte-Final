@@ -5,11 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registre</title>
     <style>
-        /* Estils personals */
         :root {
             --primary: #4CAF50;
             --light: #ffffff;
-            --bg-color: #f8f8f8;
+            --bg-color: #ffffff;
         }
 
         body {
@@ -17,56 +16,68 @@
             margin: 0;
             padding: 0;
             background-color: var(--bg-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #333;
         }
 
         .auth-container {
-            max-width: 400px;
-            margin: 50px auto;
-            padding: 20px;
+            text-align: center;
+            border: 2px solid var(--primary);
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             background-color: var(--light);
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 90%;
         }
 
         .auth-container h2 {
-            text-align: center;
             font-size: 2rem;
             color: var(--primary);
+            margin-bottom: 1rem;
         }
 
         .auth-container form {
-            margin-top: 20px;
+            margin-top: 1rem;
         }
 
-        .auth-container .form-group {
-            margin-bottom: 15px;
+        .form-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
         }
 
-        /* Estils per a les caixes d'entrada */
-        .auth-container .form-group input {
-            width: 80%;  /* Ajusta l'amplada de les caixes d'entrada a 80% */
-            padding: 8px; /* Menys padding per fer les caixes més petites */
-            margin-top: 5px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 0.9rem; /* Redueix la mida de la font */
-        }
-
-        .auth-container .form-group label {
-            display: block; /* Fa que l'etiqueta es mostri a la línia següent */
-            margin-bottom: 5px; /* Afegim una mica d'espai entre l'etiqueta i el input */
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
             font-size: 1rem;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            font-size: 1rem;
+            box-sizing: border-box;
         }
 
         .btn-primary {
             background-color: var(--primary);
             color: var(--light);
-            padding: 12px 24px;
-            font-size: 1rem;
+            padding: 0.75rem 1.5rem;
             border: none;
-            border-radius: 5px;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 1rem;
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: background-color 0.3s ease;
+            width: 100%;
+            margin-top: 1rem;
         }
 
         .btn-primary:hover {
@@ -75,27 +86,25 @@
 
         .link-container {
             text-align: center;
-            margin-top: 20px;
+            margin-top: 1.5rem;
         }
 
         .link-container a {
             text-decoration: none;
-            padding: 10px 20px;
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
             color: white;
-            background-color:rgb(32, 57, 93);
-            border-radius: 5px;
-            margin: 5px;
+            background-color: rgb(238, 118, 26);
+            border-radius: 10px;
+            margin: 5px auto;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
         }
 
         .link-container a:hover {
-            background-color:rgb(32, 57, 93);
+            background-color: rgb(200, 100, 20);
         }
 
-        /* Centra els formularis */
-        .form-group {
-            margin-bottom: 15px;
-            text-align: center;
-        }
     </style>
 </head>
 <body>
@@ -125,6 +134,14 @@
             <div class="form-group">
                 <label for="password_confirmation">Confirmar Contrasenya</label>
                 <input type="password" id="password_confirmation" name="password_confirmation" required>
+            </div>
+
+            <div class="form-group">
+                <label for="role">Rol</label>
+                <select name="role" id="role" required style="width: 80%; padding: 8px; border: 1px solid #ddd; border-radius: 5px; font-size: 0.9rem;">
+                    <option value="client">Client</option>
+                    <option value="nutricionista">Nutricionista</option>
+                </select>
             </div>
 
             <div class="form-group">

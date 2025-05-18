@@ -5,7 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Sabor i Salut') }}</title>
+    <title>Sabor i Salut</title>
+
+    <link rel="icon" type="image/png" href="{{ asset('img/Sabor_i_Salut2.png') }}">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
