@@ -24,17 +24,16 @@
                                                 <div>
                                                     <h4 class="text-md font-semibold text-green-700">{{ $menu->descripcio }}</h4>
                                                     <ul class="mt-2 text-gray-700 list-disc list-inside">
-                                                        <li><strong>Primer plat:</strong> {{ $platsCreados[0] ?? 'No especificat' }}</li>
-                                                        <li><strong>Segon plat:</strong> {{ $platsCreados[1] ?? 'No especificat' }}</li>
-                                                        <li><strong>Postres:</strong> {{ $platsCreados[2] ?? 'No especificat' }}</li>
+                                                        <li><strong>Esmorzar:</strong> {{ $platsCreados[0] ?? 'No especificat' }}</li>
+                                                        <li><strong>Dinar:</strong> {{ $platsCreados[1] ?? 'No especificat' }}</li>
+                                                        <li><strong>Berenar:</strong> {{ $platsCreados[2] ?? 'No especificat' }}</li>
+                                                        <li><strong>Sopar:</strong> {{ $platsCreados[3] ?? 'No especificat' }}</li>                                                        
                                                     </ul>
                                                     <p class="mt-2 text-sm text-gray-500">
                                                         <strong>Data creació:</strong> {{ $menu->created_at->format('d/m/Y') }}
                                                     </p>
                                                 </div>
                                                 <div>
-                                                    <a href="{{ route('menus.edit', $menu->id) }}"
-                                                    class="px-2 py-1 bg-blue-500 text-white rounded-md hover:bg-blue-600 text-xs">Editar</a>
                                                     <form action="{{ route('menus.destroy', $menu->id) }}" method="POST" class="inline">
                                                         @csrf
                                                         @method('DELETE')
@@ -66,14 +65,20 @@
                                         <li class="p-4 border border-gray-200 rounded-md shadow-sm bg-white">
                                             <h3 class="text-lg font-semibold text-green-700">{{ $menu->descripcio }}</h3>
                                             <ul class="mt-2 text-gray-700 list-disc list-inside">
-                                                <li><strong>Primer plat:</strong> {{ $plats[0] ?? 'No especificat' }}</li>
-                                                <li><strong>Segon plat:</strong> {{ $plats[1] ?? 'No especificat' }}</li>
-                                                <li><strong>Postres:</strong> {{ $plats[2] ?? 'No especificat' }}</li>
+                                                        <li><strong>Esmorzar:</strong> {{ $platsCreados[0] ?? 'No especificat' }}</li>
+                                                        <li><strong>Dinar:</strong> {{ $platsCreados[1] ?? 'No especificat' }}</li>
+                                                        <li><strong>Berenar:</strong> {{ $platsCreados[2] ?? 'No especificat' }}</li>
+                                                        <li><strong>Sopar:</strong> {{ $platsCreados[3] ?? 'No especificat' }}</li>                                                        
                                             </ul>
                                             <p class="mt-2 text-sm text-gray-500">
                                                 <strong>Nutricionista:</strong> {{ $menu->nutricionista->name ?? 'Desconegut' }}
                                                 <br>
-                                                <strong>Data recomanació:</strong> {{ $menu->data_recomanacio->format('d/m/Y') }}
+                                                <strong>Data recomanació:</strong>
+                                                @if ($menu->created_at)
+                                                    {{ $menu->created_at->format('d/m/Y') }}
+                                                @else
+                                                    {{ 'No disponible' }} {{-- Or any other appropriate message --}}
+                                                @endif
                                             </p>
                                         </li>
                                     @endforeach

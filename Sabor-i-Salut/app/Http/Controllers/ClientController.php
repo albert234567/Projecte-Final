@@ -6,6 +6,8 @@ use App\Models\User;
 use App\Models\Menu;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class ClientController extends Controller
 {
@@ -13,24 +15,36 @@ class ClientController extends Controller
     {
         $user = Auth::user();
 
-        if ($user->rol === 'nutricionista') {
-            $nutricionistaId = $user->id;
 
-            // Obtenim els IDs dels clients únics que tenen algun menú creat per aquest nutricionista
-            $clientIds = Menu::where('nutricionista_id', $nutricionistaId)
-                ->distinct()
-                ->pluck('client_id')
-                ->filter(); // Elimina possibles valors null
+    if ($user->rol === 'nutricionista') {
+        $clients = User::where('rol', 'client')
+            ->where('created_by_user_id', $user->id)
+            ->get();
 
-            // Obtenim la informació d'aquests clients des de la taula users
-            $clients = User::whereIn('id', $clientIds)
-                ->where('rol', 'client')
-                ->get();
-
-            return view('clients', ['clients' => $clients]);
-        } else {
+        return view('clients', ['clients' => $clients]);
+    } else {
             // Si l'usuari no és un nutricionista, potser mostrem els seus propis menús o redirigim
             return redirect()->route('dashboard')->with('error', 'No tens accés a la llista de clients.');
         }
     }
+
+        public function storeClient(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8|confirmed',
+        ]);
+
+        User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'rol' => 'client',
+            'created_by_user_id' => Auth::id(), // Assigna l'ID del nutricionista loguejat
+        ]);
+
+        return redirect()->route('clients')->with('success', 'Client registrat amb èxit.');
+    }
+
 }

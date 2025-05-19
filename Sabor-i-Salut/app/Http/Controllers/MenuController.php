@@ -18,7 +18,7 @@ public function mostrarDashboard()
 
     if ($user->rol === 'nutricionista') {
         $clients = User::where('rol', 'client')
-            ->where('nutricionista_id', $user->id)
+            ->where('created_by_user_id', $user->id) // <-- CANVI AQUÍ
             ->with('menusRecomanats.nutricionista')
             ->get();
 
@@ -57,18 +57,20 @@ public function mostrarDashboard()
             'client_id' => $request->client_id, // Assignar el client si s'ha passat
         ]);
     
-        return redirect()->route('menus.index')->with('success', 'Menú creat correctament!');
+        return redirect()->route('dashboard')->with('success', 'Menú creat correctament!');
     }
 
     // Editar un menú
-    public function edit(Menu $menu)
+    public function edit(Menu $menu): View
     {
-        // Comprovem que l'usuari sigui el nutricionista que va crear el menú
-        if (Auth::user()->rol !== 'nutricionista' || Auth::id() !== $menu->nutricionista_id) {
-            abort(403, 'No tens permís per editar aquest menú.');
-        }
-    
-        return view('menus.edit', compact('menu'));
+        $user = Auth::user();
+
+        // Recupera només els clients creats per l'usuari autenticat (exactament igual que al ClientController)
+        $clients = User::where('rol', 'client')
+            ->where('created_by_user_id', $user->id)
+            ->get();
+
+        return view('menus.edit', compact('menu', 'clients'));
     }
 
     // Llistar els menús creats pel nutricionista o assignats al client
@@ -95,6 +97,7 @@ public function mostrarDashboard()
             return view('dashboard', ['menus' => $menus]);
         }
     }
+    
 
 
 
@@ -108,7 +111,7 @@ public function mostrarDashboard()
 
         // Eliminem el menú
         $menu->delete();
-        return redirect()->route('menus.index')->with('success', 'Menú eliminat correctament!');
+        return redirect()->route('dashboard')->with('success', 'Menú eliminat correctament!');
     }
 
     // Assignar un menú a un client
@@ -134,13 +137,17 @@ public function mostrarDashboard()
         return redirect()->route('menus.index')->with('success', 'Menú assignat correctament.');
     }
 
-    // Formulari de creació de menús
     public function create()
     {
-        // Obtenim tots els clients
-        $clients = User::where('rol', 'client')->get();
-        
-        // Retornem la vista de creació amb els clients
+        // Obtenim l'usuari autenticat (el nutricionista)
+        $user = Auth::user();
+
+        // Obtenim només els clients creats per aquest nutricionista
+        $clients = User::where('rol', 'client')
+            ->where('created_by_user_id', $user->id)
+            ->get();
+
+        // Retornem la vista de creació amb els clients filtrats
         return view('menus.create', compact('clients'));
     }
 }

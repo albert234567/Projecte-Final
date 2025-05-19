@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registre</title>
+    <title>Registre els teus clients</title>
     <style>
         :root {
             --primary: #4CAF50;
@@ -111,8 +111,8 @@
 
     <!-- Formulari de Registre -->
     <div class="auth-container">
-        <h2>Registrar-se</h2>
-        <form action="/register" method="POST">
+        <h2>Registra els teus clients</h2>
+        <form method="POST" action="{{ route('clients.store') }}">
             <!-- CSRF Token -->
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
@@ -139,14 +139,15 @@
             <div class="form-group">
                 <label for="role">Rol</label>
                 <select name="role" id="role" required style="width: 80%; padding: 8px; border: 1px solid #ddd; border-radius: 5px; font-size: 0.9rem;">
-                    <!-- <option value="client">Client</option> -->
-                    <option value="nutricionista" selected>Nutricionista</option>
+                    <option value="client">Client</option>
+                    <!-- <option value="nutricionista" selected>Nutricionista</option> -->
                 </select>
             </div>
 
-            <div class="form-group">
-                <button type="submit" class="btn-primary">Registrar-se</button>
+            <div class="form-group" method="POST" action="{{ route('clients.store') }}">
+                <button type="submit" class="btn-primary">Registrar client</button>
             </div>
+
         </form>
 
         <!-- Enllaços per a altres pàgines -->

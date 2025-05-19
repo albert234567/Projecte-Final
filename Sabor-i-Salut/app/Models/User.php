@@ -18,7 +18,11 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name', 'email', 'password', 'rol',
+        'name',
+        'email',
+        'password',
+        'rol',
+        'created_by_user_id', 
     ];
     
 
@@ -41,4 +45,10 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+    
+public function menusAssigned()
+{
+    return $this->hasMany(Menu::class, 'client_id');
+}
+
 }

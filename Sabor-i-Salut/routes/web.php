@@ -25,6 +25,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/clients', [ClientController::class, 'index'])->name('clients');
 
+    Route::get('/register-client', function () {
+        return view('auth.registerClients');
+    })->name('clients.register'); // Canviem el nom de la ruta
+    
+    Route::post('/register-client', [ClientController::class, 'storeClient'])->name('clients.store'); // Canviem el nom de la ruta
 
     // Perfil
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -51,9 +56,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 // 🧾 Rutes per a usuaris no autenticats (guest)
 Route::middleware('guest')->group(function () {
+
     // Registre
     Route::get('register', [RegisteredUserController::class, 'create'])->name('register');
     Route::post('register', [RegisteredUserController::class, 'store']);
+
 
     // Login
     Route::get('login', [AuthenticatedSessionController::class, 'create'])->name('login');

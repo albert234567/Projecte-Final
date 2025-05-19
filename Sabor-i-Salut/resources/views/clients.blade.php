@@ -4,15 +4,23 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-800">
                     <h3 class="text-xl font-semibold mb-4">Els meus clients</h3>
+                    <a href="{{ route('clients.register') }}" class="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 focus:outline-none focus:bg-green-600">
+                        Registrar nou client
+                    </a>
+                    <br><br>
                     @if ($clients->isEmpty())
                         <p>No tens clients assignats.</p>
                     @else
-                        <ul>
-                            @foreach ($clients as $client)
-                                <li>{{ $client->name }} ({{ $client->email }})</li>
-                                {{-- Aquí pots afegir més informació del client --}}
-                            @endforeach
-                        </ul>
+                        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                            <ul>
+                                @foreach ($clients as $client)
+                                    <div class="mb-4 p-4 border border-gray-200 rounded-md">
+                                        <li>{{ $client->name }} ({{ $client->email }})</li>
+                                        {{-- Aquí pots afegir més informació del client --}}
+                                    </div>
+                                @endforeach
+                            </ul>
+                        </div>
                     @endif
                 </div>
             </div>
