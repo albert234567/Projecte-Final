@@ -34,31 +34,40 @@ public function mostrarDashboard()
 
 
     // Emmagatzemar el menú creat
-    public function store(Request $request)
-    {
-        // Validar que l'usuari sigui un nutricionista
-        if (Auth::user()->rol !== 'nutricionista') {
-            abort(403, 'No tens permís per crear menús.');
-        }
-    
-        // Validació de dades
-        $request->validate([
-            'descripcio' => 'required|string|max:255',
-            'plats' => 'required|array|min:1',
-            'plats.*' => 'required|string|max:255',
-            'client_id' => 'nullable|exists:users,id,rol,client', // Opcional per quan no es vol assignar immediatament
-        ]);
-    
-        // Crear el menú
-        $menu = Menu::create([
-            'nutricionista_id' => Auth::id(),
-            'descripcio' => $request->descripcio,
-            'plats' => json_encode($request->plats), // Guardar els plats com JSON
-            'client_id' => $request->client_id, // Assignar el client si s'ha passat
-        ]);
-    
-        return redirect()->route('dashboard')->with('success', 'Menú creat correctament!');
+public function store(Request $request)
+{
+    // Validar que l'usuari sigui un nutricionista
+    if (Auth::user()->rol !== 'nutricionista') {
+        abort(403, 'No tens permís per crear menús.');
     }
+
+    // Validació de dades
+    $validated = $request->validate([
+        'descripcio' => 'required|string|max:255',
+        'plats' => 'required|array|min:1',
+        'plats.*' => 'required|string|max:255',
+        'client_id' => 'nullable|exists:users,id,rol,client',
+        'created_at' => 'nullable|date', // ✅ Nova validació
+    ]);
+
+    // Crear el menú
+    $menu = new Menu();
+    $menu->nutricionista_id = Auth::id();
+    $menu->descripcio = $validated['descripcio'];
+    $menu->plats = json_encode($validated['plats']);
+    $menu->client_id = $validated['client_id'] ?? null;
+
+    // ✅ Si l'usuari ha introduït una data, l'assignem i desactivem timestamps
+    if (!empty($validated['created_at'])) {
+        $menu->created_at = $validated['created_at'];
+        $menu->timestamps = false; // Important per evitar sobreescriure 'created_at'
+    }
+
+    $menu->save();
+
+    return redirect()->route('dashboard')->with('success', 'Menú creat correctament!');
+}
+
 
     // Editar un menú
     public function edit(Menu $menu): View

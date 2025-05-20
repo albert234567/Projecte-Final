@@ -52,6 +52,15 @@
                         @enderror
                     </div>
 
+                    <!-- Data de creació -->
+                    <div class="mb-4">
+                        <label for="created_at" class="block text-sm font-medium text-gray-700">Data de creació (opcional)</label>
+                        <input type="date" id="created_at" name="created_at" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" value="{{ old('created_at') }}">
+                        @error('created_at')
+                            <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                        @enderror
+                    </div>
+
                     <!-- Botó -->
                     <div>
                         <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">Crear Menú</button>

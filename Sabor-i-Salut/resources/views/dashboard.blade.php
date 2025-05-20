@@ -14,76 +14,47 @@
                                 <p class="mb-4">No has creat cap menú encara.</p>
                             @else
                                 @foreach($menusCreadosPorCliente as $nomClient => $menusDelClient)
-                                    <h3 class="text-lg font-semibold text-green-700 mb-2 mt-4">Menús per a {{ $nomClient }}</h3>
-                                    <ul class="space-y-4">
-                                        @foreach($menusDelClient as $menu)
-                                            @php
-                                                $platsCreados = json_decode($menu->plats, true);
-                                            @endphp
-                                            <li class="p-4 border border-gray-200 rounded-md shadow-sm bg-white flex justify-between items-center">
-                                                <div>
-                                                    <h4 class="text-md font-semibold text-green-700">{{ $menu->descripcio }}</h4>
-                                                    <ul class="mt-2 text-gray-700 list-disc list-inside">
-                                                        <li><strong>Esmorzar:</strong> {{ $platsCreados[0] ?? 'No especificat' }}</li>
-                                                        <li><strong>Dinar:</strong> {{ $platsCreados[1] ?? 'No especificat' }}</li>
-                                                        <li><strong>Berenar:</strong> {{ $platsCreados[2] ?? 'No especificat' }}</li>
-                                                        <li><strong>Sopar:</strong> {{ $platsCreados[3] ?? 'No especificat' }}</li>                                                        
-                                                    </ul>
-                                                    <p class="mt-2 text-sm text-gray-500">
-                                                        <strong>Data creació:</strong> {{ $menu->created_at->format('d/m/Y') }}
-                                                    </p>
-                                                </div>
-                                                <div>
-                                                    <form action="{{ route('menus.destroy', $menu->id) }}" method="POST" class="inline">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit"
-                                                                class="px-2 py-1 bg-red-500 text-white rounded-md hover:bg-red-600 text-xs ml-2"
-                                                                onclick="return confirm('Estàs segur que vols eliminar aquest menú?')">Eliminar
-                                                        </button>
-                                                    </form>
-                                                </div>
-                                            </li>
-                                        @endforeach
-                                    </ul>
+                                    <div x-data="{ open: false }" class="mb-4">
+                                        <h3 @click="open = !open"
+                                            class="text-lg font-semibold text-green-700 mb-2 mt-4 cursor-pointer hover:underline">
+                                            Menús per a {{ $nomClient }}
+                                        </h3>
+                                        <ul x-show="open" x-transition.duration.300ms class="space-y-4">
+                                            @foreach($menusDelClient as $menu)
+                                                @php
+                                                    $platsCreados = json_decode($menu->plats, true);
+                                                @endphp
+                                                <li class="p-4 border border-gray-200 rounded-md shadow-sm bg-white flex justify-between items-center">
+                                                    <div>
+                                                        <h4 class="text-md font-semibold text-green-700">{{ $menu->descripcio }}</h4>
+                                                        <ul class="mt-2 text-gray-700 list-disc list-inside">
+                                                            <li><strong>Esmorzar:</strong> {{ $platsCreados[0] ?? 'No especificat' }}</li>
+                                                            <li><strong>Dinar:</strong> {{ $platsCreados[1] ?? 'No especificat' }}</li>
+                                                            <li><strong>Berenar:</strong> {{ $platsCreados[2] ?? 'No especificat' }}</li>
+                                                            <li><strong>Sopar:</strong> {{ $platsCreados[3] ?? 'No especificat' }}</li>
+                                                        </ul>
+                                                        <p class="mt-2 text-sm text-gray-500">
+                                                            <strong>Data creació:</strong> {{ $menu->created_at->format('d/m/Y') }}
+                                                        </p>
+                                                    </div>
+                                                    <div>
+                                                        <form action="{{ route('menus.destroy', $menu->id) }}" method="POST" class="inline">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit"
+                                                                    class="px-2 py-1 bg-red-500 text-white rounded-md hover:bg-red-600 text-xs ml-2"
+                                                                    onclick="return confirm('Estàs segur que vols eliminar aquest menú?')">Eliminar
+                                                            </button>
+                                                        </form>
+                                                    </div>
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
                                 @endforeach
                             @endif
-
-
                         @else
-                            <h2 class="text-xl font-semibold text-green-700 mb-2">Hola {{ Auth::user()->name }}, aquests són els teus menús assignats</h2>
-                            <br>
-
-                            @if(isset($menus) && $menus->isEmpty())
-                                <p>No tens menús assignats.</p>
-                            @elseif(isset($menus))
-                                <ul class="space-y-4">
-                                    @foreach($menus as $menu)
-                                        @php
-                                            $plats = json_decode($menu->plats, true);
-                                        @endphp
-                                        <li class="p-4 border border-gray-200 rounded-md shadow-sm bg-white">
-                                            <h3 class="text-lg font-semibold text-green-700">{{ $menu->descripcio }}</h3>
-                                            <ul class="mt-2 text-gray-700 list-disc list-inside">
-                                                        <li><strong>Esmorzar:</strong> {{ $platsCreados[0] ?? 'No especificat' }}</li>
-                                                        <li><strong>Dinar:</strong> {{ $platsCreados[1] ?? 'No especificat' }}</li>
-                                                        <li><strong>Berenar:</strong> {{ $platsCreados[2] ?? 'No especificat' }}</li>
-                                                        <li><strong>Sopar:</strong> {{ $platsCreados[3] ?? 'No especificat' }}</li>                                                        
-                                            </ul>
-                                            <p class="mt-2 text-sm text-gray-500">
-                                                <strong>Nutricionista:</strong> {{ $menu->nutricionista->name ?? 'Desconegut' }}
-                                                <br>
-                                                <strong>Data recomanació:</strong>
-                                                @if ($menu->created_at)
-                                                    {{ $menu->created_at->format('d/m/Y') }}
-                                                @else
-                                                    {{ 'No disponible' }} {{-- Or any other appropriate message --}}
-                                                @endif
-                                            </p>
-                                        </li>
-                                    @endforeach
-                                </ul>
-                            @endif
+                            {{-- Part per a altres rols (clients) sense canvis --}}
                         @endif
                     </div>
                 </div>
