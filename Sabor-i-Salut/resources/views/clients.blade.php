@@ -12,7 +12,7 @@
                     @else
                         <div class="mb-4 p-4 bg-yellow-100 border border-yellow-300 text-yellow-800 rounded-md">
                             Has arribat al límit de 2 clients. <br>
-                            Augmenta la capacitat de clients amb l'accés <strong>premium</strong> de <em>Sabor i Salut</em>.
+                            Augmenta la capacitat de clients amb l'accés <strong>premium per 20€/mes</strong> de <em>Sabor i Salut</em>.
                         </div>
                     @endif
 
