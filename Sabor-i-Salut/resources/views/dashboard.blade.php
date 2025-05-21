@@ -3,6 +3,19 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg border border-green-200">
                 <div class="p-6 text-gray-800">
+                    <form method="GET" action="{{ route('dashboard') }}" class="mb-4 flex items-center space-x-2">
+                        <input type="date" name="data_menu" value="{{ $dataSeleccionada !== 'tots' ? $dataSeleccionada : '' }}" class="border rounded px-2 py-1" />
+                        <button type="submit" class="bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700">
+                            Filtrar per data
+                        </button>
+
+                        <a href="{{ route('dashboard', ['data_menu' => 'tots']) }}" 
+                        class="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700">
+                            Mostrar tots
+                        </a>
+                    </form>
+
+
                     <div class="mt-8">
                         @if(Auth::user()->rol === 'nutricionista')
                             <h2 class="text-xl font-semibold text-green-700 mb-2">Hola {{ Auth::user()->name }}, aquests són els menús que has creat per als teus clients</h2>
@@ -54,7 +67,39 @@
                                 @endforeach
                             @endif
                         @else
-                            {{-- Part per a altres rols (clients) sense canvis --}}
+                            <h2 class="text-xl font-semibold text-green-700 mb-2">Hola {{ Auth::user()->name }}, aquests són els teus menús assignats</h2>
+                            <br>
+
+                            @if(isset($menus) && $menus->isEmpty())
+                                <p>No tens menús assignats.</p>
+                            @elseif(isset($menus))
+                                <ul class="space-y-4">
+                                    @foreach($menus as $menu)
+                                        @php
+                                            $plats = json_decode($menu->plats, true);
+                                        @endphp
+                                        <li class="p-4 border border-gray-200 rounded-md shadow-sm bg-white">
+                                            <h3 class="text-lg font-semibold text-green-700">{{ $menu->descripcio }}</h3>
+                                            <ul class="mt-2 text-gray-700 list-disc list-inside">
+                                                        <li><strong>Esmorzar:</strong> {{ $platsCreados[0] ?? 'No especificat' }}</li>
+                                                        <li><strong>Dinar:</strong> {{ $platsCreados[1] ?? 'No especificat' }}</li>
+                                                        <li><strong>Berenar:</strong> {{ $platsCreados[2] ?? 'No especificat' }}</li>
+                                                        <li><strong>Sopar:</strong> {{ $platsCreados[3] ?? 'No especificat' }}</li>                                                        
+                                            </ul>
+                                            <p class="mt-2 text-sm text-gray-500">
+                                                <strong>Nutricionista:</strong> {{ $menu->nutricionista->name ?? 'Desconegut' }}
+                                                <br>
+                                                <strong>Data recomanació:</strong>
+                                                @if ($menu->created_at)
+                                                    {{ $menu->created_at->format('d/m/Y') }}
+                                                @else
+                                                    {{ 'No disponible' }} {{-- Or any other appropriate message --}}
+                                                @endif
+                                            </p>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            @endif
                         @endif
                     </div>
                 </div>

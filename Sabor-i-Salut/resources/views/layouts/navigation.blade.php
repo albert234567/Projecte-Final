@@ -12,7 +12,12 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" class="text-white hover:text-green-100">
                         {{ __('Menus') }}
                     </x-nav-link>
+
                     @if(Auth::user()->rol === 'nutricionista')
+                        <x-nav-link :href="route('plats')" :active="request()->routeIs('plats.*')" class="text-white hover:text-green-100">
+                            {{ __('Plats') }}
+                        </x-nav-link>
+
                         <x-nav-link :href="route('clients')" :active="request()->routeIs('clients')" class="text-white hover:text-green-100">
                             {{ __('Els meus clients') }}
                         </x-nav-link>

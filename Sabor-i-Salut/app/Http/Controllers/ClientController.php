@@ -11,22 +11,23 @@ use Illuminate\Support\Facades\Hash;
 
 class ClientController extends Controller
 {
-    public function index(): View
+
+    public function index()
     {
         $user = Auth::user();
 
-
-    if ($user->rol === 'nutricionista') {
+        // Obtenir els clients creats per aquest nutricionista
         $clients = User::where('rol', 'client')
             ->where('created_by_user_id', $user->id)
             ->get();
 
-        return view('clients', ['clients' => $clients]);
-    } else {
-            // Si l'usuari no és un nutricionista, potser mostrem els seus propis menús o redirigim
-            return redirect()->route('dashboard')->with('error', 'No tens accés a la llista de clients.');
-        }
+        // Calcular si ha arribat al límit
+        $haArribatLimitClients = $clients->count() >= 3;
+
+        // Passar les dades a la vista
+        return view('clients', compact('clients', 'haArribatLimitClients'));
     }
+
 
         public function storeClient(Request $request)
     {
@@ -46,5 +47,24 @@ class ClientController extends Controller
 
         return redirect()->route('clients')->with('success', 'Client registrat amb èxit.');
     }
+
+    public function destroy($id)
+{
+    $user = Auth::user();
+
+    // Comprova que el client existeix i que l'ha creat aquest nutricionista
+    $client = User::where('id', $id)
+        ->where('rol', 'client')
+        ->where('created_by_user_id', $user->id)
+        ->firstOrFail();
+        
+    Menu::where('client_id', $client->id)->delete();
+
+    // Elimina el client
+    $client->delete();
+
+    return redirect()->route('clients')->with('success', 'Client eliminat correctament.');
+}
+
 
 }

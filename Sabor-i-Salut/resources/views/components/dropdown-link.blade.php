@@ -1,1 +1,11 @@
-<a {{ $attributes->merge(['class' => 'block w-full px-4 py-2 text-start text-sm leading-5 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-800 transition duration-150 ease-in-out']) }}>{{ $slot }}</a>
+@props(['active'])
+
+@php
+$classes = ($active ?? false)
+    ? 'block px-4 py-2 text-gray-800 text-sm font-medium leading-5 bg-white focus:outline-none focus:bg-blue-100 focus:text-blue-600'
+    : 'block px-4 py-2 text-gray-800 text-sm font-medium leading-5 hover:bg-blue-50 hover:text-blue-600 focus:outline-none focus:bg-blue-100 focus:text-blue-600 transition';
+@endphp
+
+<a {{ $attributes->merge(['class' => $classes]) }}>
+    {{ $slot }}
+</a>
