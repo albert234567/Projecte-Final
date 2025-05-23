@@ -13,8 +13,9 @@
                         {{ __('Menus') }}
                     </x-nav-link>
 
+                @auth
                     @if(Auth::user()->rol === 'nutricionista')
-                        <x-nav-link :href="route('plats')" :active="request()->routeIs('plats.*')" class="text-white hover:text-green-100">
+                        <x-nav-link :href="route('plats.index')" :active="request()->routeIs('plats.*')" class="text-white hover:text-green-100">
                             {{ __('Plats') }}
                         </x-nav-link>
 
@@ -22,6 +23,8 @@
                             {{ __('Els meus clients') }}
                         </x-nav-link>
                     @endif
+                @endauth
+
                 </div>
             </div>
 

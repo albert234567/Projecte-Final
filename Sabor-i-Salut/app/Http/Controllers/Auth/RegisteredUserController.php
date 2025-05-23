@@ -37,13 +37,14 @@ class RegisteredUserController extends Controller
             'rol' => ['required', 'in:nutricionista,client'], // Assegura que el rol sigui vàlid
         ]);
 
-        // Crear l'usuari correctament
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'rol' => $request->rol ?? 'client', // Assigna 'client' per defecte si no s'especifica
+            'rol' => $request->rol ?? 'client',
+            'created_by_user_id' => $request->rol === 'client' ? Auth::id() : null,
         ]);
+
 
         event(new Registered($user));
 

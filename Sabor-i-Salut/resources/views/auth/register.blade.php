@@ -136,13 +136,7 @@
                 <input type="password" id="password_confirmation" name="password_confirmation" required>
             </div>
 
-            <div class="form-group">
-                <label for="role">Rol</label>
-                <select name="role" id="role" required style="width: 80%; padding: 8px; border: 1px solid #ddd; border-radius: 5px; font-size: 0.9rem;">
-                    <!-- <option value="client">Client</option> -->
-                    <option value="nutricionista" selected>Nutricionista</option>
-                </select>
-            </div>
+            <input type="hidden" name="rol" value="nutricionista">
 
             <div class="form-group">
                 <button type="submit" class="btn-primary">Registrar-se</button>

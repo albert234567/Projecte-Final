@@ -14,7 +14,6 @@ class ProfileController extends Controller
     /**
      * Mostra el formulari d'edició del perfil.
      */
-   // ProfileController.php
 public function edit()
 {
     $user = Auth::user();

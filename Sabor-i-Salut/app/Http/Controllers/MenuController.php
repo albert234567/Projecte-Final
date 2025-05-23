@@ -8,6 +8,7 @@ use App\Models\Menu;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Models\Plat;
 
 class MenuController extends Controller
 {
@@ -148,15 +149,17 @@ public function store(Request $request)
 
     public function create()
     {
-        // Obtenim l'usuari autenticat (el nutricionista)
         $user = Auth::user();
 
-        // Obtenim només els clients creats per aquest nutricionista
+        // Obtenim els clients que crea aquest nutricionista
         $clients = User::where('rol', 'client')
             ->where('created_by_user_id', $user->id)
             ->get();
 
-        // Retornem la vista de creació amb els clients filtrats
-        return view('menus.create', compact('clients'));
+        // Obtenim tots els plats creats (o només els que crea el nutricionista, si fa falta)
+        $plats = Plat::all();
+
+        return view('menus.create', compact('clients', 'plats'));
     }
+
 }

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\PlatController;            // Afegeixo PlatController
+use App\Http\Controllers\PlatController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
@@ -42,6 +42,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     // Dashboard i clients
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
     Route::get('/clients', [ClientController::class, 'index'])->name('clients');
     Route::delete('/clients/{id}', [ClientController::class, 'destroy'])->name('clients.destroy');
     Route::get('/register-client', function () {
@@ -49,8 +50,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('clients.register');
     Route::post('/register-client', [ClientController::class, 'storeClient'])->name('clients.store');
 
-    // Plats
-    Route::get('/plats', [PlatController::class, 'index'])->name('plats');
+    // Plats - totes les rutes RESTful
+    Route::resource('plats', PlatController::class)->except(['show']);
 
     // Perfil
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
