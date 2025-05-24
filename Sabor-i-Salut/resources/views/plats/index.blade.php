@@ -26,9 +26,9 @@
 
                         <select name="intolerancia" class="border rounded px-3 py-1">
                             <option value="">-- Sense intoleràncies --</option>
-                            <option value="lactosa" {{ request('intolerancia') == 'lactosa' ? 'selected' : '' }}>Lactosa</option>
-                            <option value="gluten" {{ request('intolerancia') == 'gluten' ? 'selected' : '' }}>Gluten</option>
-                            <option value="fruits_secs" {{ request('intolerancia') == 'fruits_secs' ? 'selected' : '' }}>Fruits secs</option>
+                            <option value="lactosa" {{ request('intolerancia') == 'lactosa' ? 'selected' : '' }}>Sense lactosa</option>
+                            <option value="gluten" {{ request('intolerancia') == 'gluten' ? 'selected' : '' }}>Sense gluten</option>
+                            <option value="fruits_secs" {{ request('intolerancia') == 'fruits_secs' ? 'selected' : '' }}>Sense fruits secs</option>
                         </select>
 
                         <button type="submit" class="bg-green-600 text-white px-4 py-1 rounded hover:bg-green-700">Filtrar</button>
@@ -59,6 +59,7 @@
                         Crear Nou Plat
                     </a>
 
+                    
                     @if($plats->isEmpty())
                         <p class="text-gray-600">Encara no hi ha cap plat creat.</p>
                     @else

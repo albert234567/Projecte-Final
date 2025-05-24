@@ -104,4 +104,32 @@ class PlatController extends Controller
 
         return redirect()->route('plats.index')->with('success', 'Plat eliminat correctament.');
     }
+
+public function filter(Request $request)
+{
+    $query = Plat::query();
+
+    // Filtrar per intoleràncies amb OR
+    if ($request->filled('intolerancies')) {
+        $intolerancies = $request->input('intolerancies');
+
+        $query->where(function($q) use ($intolerancies) {
+            foreach ($intolerancies as $intolerancia) {
+                $q->orWhereJsonContains('intolerancies', $intolerancia);
+            }
+        });
+    }
+
+    // Filtrar per vega
+    if ($request->filled('vega') && $request->vega == '1') {
+        $query->where('vega', true);
+    }
+
+    $plats = $query->get();
+
+    return response()->json($plats);
+}
+
+
+
 }

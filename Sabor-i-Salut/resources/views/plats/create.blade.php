@@ -20,7 +20,7 @@
                     </div>
 
                     <div class="mb-4">
-                        <label for="descripcio" class="block text-sm font-medium text-gray-700">Descripció</label>
+                        <label for="descripcio" class="block text-sm font-medium text-gray-700">Descripció i mides</label>
                         <textarea name="descripcio" id="descripcio" rows="4" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">{{ old('descripcio') }}</textarea>
                         @error('descripcio')
                             <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
@@ -48,7 +48,7 @@
                     <div class="mb-4">
                         <span class="block text-sm font-medium text-gray-700 mb-1">Intoleràncies</span>
                         @php
-                            $intoleranciesOptions = ['lactosa' => 'Lactosa', 'gluten' => 'Gluten', 'fruits_secs' => 'Fruits secs'];
+                            $intoleranciesOptions = ['Sense lactosa' => 'Sense lactosa', 'Sense gluten' => 'Sense gluten', 'Sense fruits secs' => 'Sense fruits secs'];
                             $selectedIntolerancies = old('intolerancies', $plat->intolerancies ?? []);
                         @endphp
                         @foreach ($intoleranciesOptions as $key => $label)

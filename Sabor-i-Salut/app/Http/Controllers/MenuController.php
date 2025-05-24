@@ -147,19 +147,39 @@ public function store(Request $request)
         return redirect()->route('menus.index')->with('success', 'Menú assignat correctament.');
     }
 
-    public function create()
-    {
-        $user = Auth::user();
+public function create(Request $request)
+{
+    $user = Auth::user();
 
-        // Obtenim els clients que crea aquest nutricionista
-        $clients = User::where('rol', 'client')
-            ->where('created_by_user_id', $user->id)
-            ->get();
+    // Clients creats pel nutricionista
+    $clients = User::where('rol', 'client')
+        ->where('created_by_user_id', $user->id)
+        ->get();
 
-        // Obtenim tots els plats creats (o només els que crea el nutricionista, si fa falta)
-        $plats = Plat::all();
+    // Consulta base
+    $query = Plat::query();
 
-        return view('menus.create', compact('clients', 'plats'));
+    // Filtres
+    if ($request->filled('tipus')) {
+        $query->where('tipus', $request->tipus);
     }
+
+    if ($request->has('vega')) {
+        $query->where('vega', true);
+    }
+
+    if ($request->filled('intolerancia')) {
+        // Suposem que intolerancies està en JSON a la BD (array d'intoleràncies que té el plat)
+        // Volem plats que NO tinguin la intolerància indicada (ex: si demanen sense gluten, el plat no ha de tenir gluten)
+        $intol = $request->intolerancia;
+        $query->whereJsonDoesntContain('intolerancies', $intol);
+    }
+
+    $plats = $query->get();
+
+    return view('menus.create', compact('clients', 'plats'));
+}
+
+
 
 }
