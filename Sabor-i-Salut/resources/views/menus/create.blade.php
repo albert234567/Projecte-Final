@@ -184,20 +184,30 @@ document.addEventListener('DOMContentLoaded', function() {
             ev.dataTransfer.setData("text", ev.target.id);
         }
 
-        function drop(ev) {
-            ev.preventDefault();
-            const data = ev.dataTransfer.getData("text");
-            const item = document.getElementById(data);
+function drop(ev) {
+    ev.preventDefault();
+    const data = ev.dataTransfer.getData("text");
+    const item = document.getElementById(data);
 
-            // Evitem duplicats: no permetre duplicar dins d'altres contenidors
-            if (!ev.target.classList.contains('container')) {
-                ev.target = ev.target.closest('.container');
-            }
+    // Assegura que el drop es fa sobre un contenidor
+    let container = ev.target.closest('.container');
+    if (!container || container.contains(item)) return;
 
-            if (ev.target && !ev.target.contains(item)) {
-                ev.target.appendChild(item);
-            }
-        }
+    container.appendChild(item);
+
+    // Netegem inputs antics si existeixen
+    const oldInput = item.querySelector('input[type="hidden"]');
+    if (oldInput) oldInput.remove();
+
+    // Afegim un input hidden amb el nom plats[tipus][]
+    const tipus = container.id;
+    const hiddenInput = document.createElement('input');
+    hiddenInput.type = 'hidden';
+    hiddenInput.name = `plats[${tipus}][]`;
+    hiddenInput.value = item.id.replace('plat', '');
+    item.appendChild(hiddenInput);
+}
+
 
     </script>
 

@@ -33,7 +33,6 @@ public function mostrarDashboard()
 }
 
 
-
     // Emmagatzemar el menú creat
 public function store(Request $request)
 {
@@ -42,29 +41,29 @@ public function store(Request $request)
         abort(403, 'No tens permís per crear menús.');
     }
 
-    // Validació de dades
-    $validated = $request->validate([
-        'descripcio' => 'required|string|max:255',
-        'plats' => 'required|array|min:1',
-        'plats.*' => 'required|string|max:255',
-        'client_id' => 'nullable|exists:users,id,rol,client',
-        'created_at' => 'nullable|date', // ✅ Nova validació
-    ]);
+$validated = $request->validate([
+    'descripcio' => 'required|string|max:255',
+    'plats' => 'required|array|min:1',
+    'plats.*' => 'array|min:1', // Cada àpat hauria de tenir almenys un plat
+    'plats.*.*' => 'integer|exists:plats,id',
+    'client_id' => 'nullable|exists:users,id,rol,client',
+    'created_at' => 'nullable|date',
+]);
 
-    // Crear el menú
-    $menu = new Menu();
-    $menu->nutricionista_id = Auth::id();
-    $menu->descripcio = $validated['descripcio'];
-    $menu->plats = json_encode($validated['plats']);
-    $menu->client_id = $validated['client_id'] ?? null;
 
-    // ✅ Si l'usuari ha introduït una data, l'assignem i desactivem timestamps
-    if (!empty($validated['created_at'])) {
-        $menu->created_at = $validated['created_at'];
-        $menu->timestamps = false; // Important per evitar sobreescriure 'created_at'
-    }
+$menu = new Menu();
+$menu->nutricionista_id = Auth::id();
+$menu->descripcio = $validated['descripcio'];
+$menu->plats = json_encode($validated['plats']); // JSON amb esmorzar, dinar, etc.
+$menu->client_id = $validated['client_id'] ?? null;
 
-    $menu->save();
+if (!empty($validated['created_at'])) {
+    $menu->created_at = $validated['created_at'];
+    $menu->timestamps = false;
+}
+
+$menu->save();
+
 
     return redirect()->route('dashboard')->with('success', 'Menú creat correctament!');
 }
@@ -179,6 +178,7 @@ public function create(Request $request)
 
     return view('menus.create', compact('clients', 'plats'));
 }
+
 
 
 
