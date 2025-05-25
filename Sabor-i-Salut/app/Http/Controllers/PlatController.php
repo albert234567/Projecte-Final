@@ -54,16 +54,26 @@ class PlatController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+        $validatedData = $request->validate([
             'nom' => 'required|string|max:255',
             'descripcio' => 'nullable|string',
+            'quantitat' => 'nullable|string|max:255', // <-- AFEGIT: Validació per al nou camp quantitat
             'tipus' => 'nullable|string|in:esmorzar,dinar,berenar,sopar',
             'vega' => 'nullable|boolean',
             'intolerancies' => 'nullable|array',
-            'intolerancies.*' => 'string',
+            'intolerancies.*' => 'string', // Pots afegir validació 'in' aquí si vols valors concrets
         ]);
 
-        Plat::create($request->only('nom', 'descripcio', 'tipus', 'vega', 'intolerancies'));
+        // Crea el plat amb les dades validades, incloent 'quantitat'
+        $plat = Plat::create([
+            'nom' => $validatedData['nom'],
+            'descripcio' => $validatedData['descripcio'],
+            'quantitat' => $validatedData['quantitat'] ?? null, // <-- AFEGIT: Desem la quantitat
+            'tipus' => $validatedData['tipus'],
+            'vega' => $validatedData['vega'] ?? false, // Assegura un valor booleà per 'vega'
+            'intolerancies' => $validatedData['intolerancies'] ?? [], // Assegura un array per 'intolerancies'
+            'created_by_user_id' => auth()->id(), // Assegura que l'usuari autenticat crea el plat
+        ]);
 
         return redirect()->route('plats.index')->with('success', 'Plat creat correctament.');
     }
@@ -81,16 +91,25 @@ class PlatController extends Controller
      */
     public function update(Request $request, Plat $plat)
     {
-        $request->validate([
+        $validatedData = $request->validate([ // <-- CANVIAT: Utilitzem $validatedData
             'nom' => 'required|string|max:255',
             'descripcio' => 'nullable|string',
+            'quantitat' => 'nullable|string|max:255', // <-- AFEGIT: Validació per al nou camp quantitat
             'tipus' => 'nullable|string|in:esmorzar,dinar,berenar,sopar',
             'vega' => 'nullable|boolean',
             'intolerancies' => 'nullable|array',
-            'intolerancies.*' => 'string',
+            'intolerancies.*' => 'string', // Pots afegir validació 'in' aquí si vols valors concrets
         ]);
 
-        $plat->update($request->only('nom', 'descripcio', 'tipus', 'vega', 'intolerancies'));
+        $plat->update([ // <-- CANVIAT: Passem l'array validat
+            'nom' => $validatedData['nom'],
+            'descripcio' => $validatedData['descripcio'],
+            'quantitat' => $validatedData['quantitat'] ?? null, // <-- AFEGIT: Actualitzem la quantitat
+            'tipus' => $validatedData['tipus'],
+            'vega' => $validatedData['vega'] ?? false,
+            'intolerancies' => $validatedData['intolerancies'] ?? [],
+        ]);
+
 
         return redirect()->route('plats.index')->with('success', 'Plat actualitzat correctament.');
     }
@@ -138,8 +157,4 @@ class PlatController extends Controller
         // Retorna els plats com a JSON a la petició AJAX
         return response()->json($plats);
     }
-
-
-
-
 }

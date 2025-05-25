@@ -28,6 +28,14 @@
                     </div>
 
                     <div class="mb-4">
+                        <label for="quantitat" class="block text-sm font-medium text-gray-700">Quantitat (ex: 200g)</label>
+                        <input type="text" name="quantitat" id="quantitat" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" value="{{ old('quantitat') }}">
+                        @error('quantitat')
+                            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div class="mb-4">
                         <label for="tipus" class="block text-sm font-medium text-gray-700">Tipus</label>
                         <select name="tipus" id="tipus" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" required>
                             <option value="">Selecciona tipus</option>

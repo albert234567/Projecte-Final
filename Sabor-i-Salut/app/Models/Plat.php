@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Plat extends Model
 {
-    protected $fillable = ['nom', 'descripcio', 'tipus', 'vega', 'intolerancies'];
+    protected $fillable = ['nom', 'descripcio', 'quantitat', 'tipus', 'vega', 'intolerancies'];
 
     protected $casts = [
         'vega' => 'boolean',

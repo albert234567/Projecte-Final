@@ -67,7 +67,12 @@
                             @foreach($plats as $plat)
                                 <li class="p-4 border border-gray-200 rounded-md shadow-sm bg-white flex justify-between items-start">
                                     <div>
-                                        <h4 class="text-md font-semibold text-green-700">{{ $plat->nom }}</h4>
+                                        <h4 class="text-md font-semibold text-green-700">
+                                                {{ $plat->nom }}
+                                                @if($plat->quantitat)
+                                                    <span class="text-sm text-gray-500">({{ $plat->quantitat }})</span>
+                                                @endif
+                                            </h4>
                                         @if($plat->descripcio)
                                             <p class="mt-1 text-gray-700">{{ $plat->descripcio }}</p>
                                         @endif
