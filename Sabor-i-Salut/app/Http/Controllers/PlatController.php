@@ -105,30 +105,40 @@ class PlatController extends Controller
         return redirect()->route('plats.index')->with('success', 'Plat eliminat correctament.');
     }
 
-public function filter(Request $request)
-{
-    $query = Plat::query();
+    public function filter(Request $request)
+    {
+        $query = Plat::query();
 
-    // Filtrar per intoleràncies amb OR
-    if ($request->filled('intolerancies')) {
-        $intolerancies = $request->input('intolerancies');
+        // Filtre per Vegà
+        if ($request->boolean('vega')) {
+            $query->where('vega', true);
+        }
 
-        $query->where(function($q) use ($intolerancies) {
-            foreach ($intolerancies as $intolerancia) {
-                $q->orWhereJsonContains('intolerancies', $intolerancia);
+        // Filtre per Intoleràncies (AND lògic)
+        $intolerancies = $request->input('intolerancies', []);
+        if (!empty($intolerancies)) {
+            // Assegurem-nos que $intolerancies és un array
+            if (!is_array($intolerancies)) {
+                $intolerancies = [$intolerancies];
             }
-        });
+
+            // Apliquem una condició JSON_CONTAINS per cada intolerància seleccionada.
+            // Això crea un AND lògic automàticament.
+            foreach ($intolerancies as $intolerancia) {
+                // IMPORTANT: Assegura't que el valor 'Sense lactosa', 'Sense gluten', etc.
+                // coincideix exactament amb el format guardat a la teva BD (casella, espais).
+                $query->whereRaw("JSON_CONTAINS(intolerancies, '\"{$intolerancia}\"')");
+            }
+            // NO afegis aquesta línia si vols que el plat pugui tenir les 3 seleccionades + alguna més:
+            // $query->whereRaw('JSON_LENGTH(intolerancies) = ?', [count($intolerancies)]);
+        }
+
+        $plats = $query->get();
+
+        // Retorna els plats com a JSON a la petició AJAX
+        return response()->json($plats);
     }
 
-    // Filtrar per vega
-    if ($request->filled('vega') && $request->vega == '1') {
-        $query->where('vega', true);
-    }
-
-    $plats = $query->get();
-
-    return response()->json($plats);
-}
 
 
 

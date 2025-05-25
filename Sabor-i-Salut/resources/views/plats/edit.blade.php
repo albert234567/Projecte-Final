@@ -49,7 +49,7 @@
                     <div class="mb-4">
                         <span class="block text-sm font-medium text-gray-700 mb-1">Intoleràncies</span>
                         @php
-                            $intoleranciesOptions = ['lactosa' => 'Lactosa', 'gluten' => 'Gluten', 'fruits_secs' => 'Fruits secs'];
+                            $intoleranciesOptions = ['Sense lactosa' => 'Sense lactosa', 'Sense gluten' => 'Sense gluten', 'Sense fruits secs' => 'Sense fruits secs'];
                             $selectedIntolerancies = old('intolerancies', $plat->intolerancies ?? []);
                         @endphp
                         @foreach ($intoleranciesOptions as $key => $label)
