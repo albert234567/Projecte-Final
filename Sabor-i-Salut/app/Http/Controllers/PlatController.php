@@ -24,16 +24,13 @@ class PlatController extends Controller
             $query->where('vega', true);
         }
 
-        // Filtrar per intolerància (ex: lactosa, gluten, etc.)
         if ($request->filled('intolerancia')) {
-            // Busquem plats on la intolerància NO està a la llista d’intoleràncies.
             $intolerancia = $request->intolerancia;
 
-            $query->where(function($q) use ($intolerancia) {
-                $q->whereNull('intolerancies')
-                ->orWhereJsonDoesntContain('intolerancies', $intolerancia);
-            });
+            // Mostrar només plats que contenen aquesta intolerància
+            $query->whereJsonContains('intolerancies', $intolerancia);
         }
+
 
         $plats = $query->paginate(15);
 

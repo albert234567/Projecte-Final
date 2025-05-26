@@ -153,7 +153,31 @@
                                                     {{ 'No disponible' }} {{-- Or any other appropriate message --}}
                                                 @endif
                                             </p>
-                                        </li>
+                                            <button 
+                                                type="button" 
+                                                onclick="document.getElementById('form-comentari-{{ $menu->id }}').classList.toggle('hidden')"
+                                                class="bg-blue-500 text-white text-sm px-2 py-0.5 rounded hover:bg-blue-600 mb-3"
+                                            >
+                                                Afegir comentari
+                                            </button>
+
+
+                                            {{-- Formulari amagat per defecte --}}
+                                            <form 
+                                                method="POST" 
+                                                action="{{ route('client.comentaris.guardar') }}" 
+                                                id="form-comentari-{{ $menu->id }}" 
+                                                class="hidden"
+                                            >
+                                                @csrf
+                                                <input type="hidden" name="menu_id" value="{{ $menu->id }}">
+                                                <div class="mb-2">
+                                                    <label for="comentari_{{ $menu->id }}" class="block text-sm font-medium text-gray-700">Comentari:</label>
+                                                    <textarea name="comentari" id="comentari_{{ $menu->id }}" rows="2" class="mt-1 p-2 w-full border rounded"></textarea>
+                                                </div>
+                                                <button type="submit" class="bg-green-500 text-white px-4 py-1 rounded hover:bg-green-600">Enviar comentari</button>
+                                            </form>
+
                                     @endforeach
                                 </ul>
                             @endif

@@ -26,10 +26,11 @@
 
                         <select name="intolerancia" class="border rounded px-3 py-1">
                             <option value="">-- Sense intoleràncies --</option>
-                            <option value="lactosa" {{ request('intolerancia') == 'lactosa' ? 'selected' : '' }}>Sense lactosa</option>
-                            <option value="gluten" {{ request('intolerancia') == 'gluten' ? 'selected' : '' }}>Sense gluten</option>
-                            <option value="fruits_secs" {{ request('intolerancia') == 'fruits_secs' ? 'selected' : '' }}>Sense fruits secs</option>
+                            <option value="Sense lactosa" {{ request('intolerancia') == 'Sense lactosa' ? 'selected' : '' }}>Sense lactosa</option>
+                            <option value="Sense gluten" {{ request('intolerancia') == 'Sense gluten' ? 'selected' : '' }}>Sense gluten</option>
+                            <option value="Sense fruits secs" {{ request('intolerancia') == 'Sense fruits secs' ? 'selected' : '' }}>Sense fruits secs</option>
                         </select>
+
 
                         <button type="submit" class="bg-green-600 text-white px-4 py-1 rounded hover:bg-green-700">Filtrar</button>
 

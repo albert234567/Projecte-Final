@@ -19,6 +19,10 @@
                             {{ __('Plats') }}
                         </x-nav-link>
 
+                        <x-nav-link :href="route('comentaris')" :active="request()->routeIs('comentaris')" class="text-white hover:text-green-100">
+                            {{ __('Comentaris') }}
+                        </x-nav-link>
+
                         <x-nav-link :href="route('clients')" :active="request()->routeIs('clients')" class="text-white hover:text-green-100">
                             {{ __('Els meus clients') }}
                         </x-nav-link>

@@ -11,6 +11,8 @@ use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\ClientController;
 use Illuminate\Http\Request;
 use App\Models\Plat;
+use App\Http\Controllers\ComentariMenuController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -21,6 +23,13 @@ use App\Models\Plat;
 // Exemple: routes/web.php
 Route::get('/plats/filter', [PlatController::class, 'filter'])->name('plats.filter');
 
+// Per mostrar els comentaris (GET)
+Route::middleware(['auth', 'role:nutricionista'])->group(function () {
+    Route::get('/comentaris', [ComentariMenuController::class, 'index'])->name('comentaris');
+});
+
+// Per guardar un comentari (POST)
+Route::post('/comentaris', [ComentariMenuController::class, 'store'])->name('client.comentaris.guardar');
 
 // Ruta pública d'inici
 Route::get('/', function () {
