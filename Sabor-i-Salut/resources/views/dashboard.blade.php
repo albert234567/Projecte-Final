@@ -40,32 +40,41 @@
                                                 <li class="p-4 border border-gray-200 rounded-md shadow-sm bg-white flex justify-between items-center">
                                                     <div>
                                                         <h4 class="text-md font-semibold text-green-700">{{ $menu->descripcio }}</h4>
-@php
-    $platsDecoded = json_decode($menu->plats, true);
-@endphp
+                                                        @php
+                                                            $platsDecoded = json_decode($menu->plats, true);
+                                                        @endphp
 
-<ul>
-    <li><strong>Esmorzar:</strong> 
-        @foreach ($platsDecoded['esmorzar'] ?? [] as $platId)
-            {{ \App\Models\Plat::find($platId)->nom ?? 'Plat eliminat' }}
-        @endforeach
-    </li>
-    <li><strong>Dinar:</strong> 
-        @foreach ($platsDecoded['dinar'] ?? [] as $platId)
-            {{ \App\Models\Plat::find($platId)->nom ?? 'Plat eliminat' }}
-        @endforeach
-    </li>
-    <li><strong>Berenar:</strong> 
-        @foreach ($platsDecoded['berenar'] ?? [] as $platId)
-            {{ \App\Models\Plat::find($platId)->nom ?? 'Plat eliminat' }}
-        @endforeach
-    </li>
-    <li><strong>Sopar:</strong> 
-        @foreach ($platsDecoded['sopar'] ?? [] as $platId)
-            {{ \App\Models\Plat::find($platId)->nom ?? 'Plat eliminat' }}
-        @endforeach
-    </li>
-</ul>
+                                                        <ul>
+                                                            @foreach (['esmorzar', 'dinar', 'berenar', 'sopar'] as $menjador)
+                                                                <li>
+                                                                    <strong>{{ ucfirst($menjador) }}:</strong>
+                                                                    @foreach ($platsDecoded[$menjador] ?? [] as $index => $platId)
+                                                                        @php
+                                                                            $plat = \App\Models\Plat::find($platId);
+                                                                            $elementId = $menjador . '-' . $index;
+                                                                        @endphp
+                                                                        @if ($plat)
+                                                                            <span class="toggle-plat" data-target="{{ $elementId }}" style="cursor:pointer;">
+                                                                                ▶️ {{ $plat->nom }}
+                                                                            </span>
+                                                                            <div id="{{ $elementId }}" style="display:none; margin-left: 1.5em; margin-top: 0.3em;">
+                                                                                <p><strong>Descripció:</strong> {{ $plat->descripcio }}</p>
+                                                                                <p><strong>Quantitat:</strong> {{ $plat->quantitat }}</p>
+                                                                                <p><strong>Intoleràncies:</strong> {{ is_array($plat->intolerancies) ? implode(', ', $plat->intolerancies) : 'Cap' }}</p>
+                                                                                <p><strong>Vega:</strong> {{ $plat->vega == 1 ? 'Si' : 'No' }}</p>
+                                                                            </div>
+                                                                            @if (!$loop->last)
+                                                                                , 
+                                                                            @endif
+                                                                        @else
+                                                                            <span>Plat eliminat</span>
+                                                                        @endif
+                                                                    @endforeach
+                                                                </li>
+                                                            @endforeach
+                                                        </ul>
+
+
 
                                                         <p class="mt-2 text-sm text-gray-500">
                                                             <strong>Data creació:</strong> {{ $menu->created_at->format('d/m/Y') }}
@@ -101,45 +110,39 @@
                                         @endphp
                                         <li class="p-4 border border-gray-200 rounded-md shadow-sm bg-white">
                                             <h3 class="text-lg font-semibold text-green-700">{{ $menu->descripcio }}</h3>
-@php
-    $platsDecoded = json_decode($menu->plats, true);
-@endphp
+                                            @php
+                                                $platsDecoded = json_decode($menu->plats, true);
+                                            @endphp
 
-<ul class="mt-2 text-gray-700 list-disc list-inside">
-    <li><strong>Esmorzar:</strong> 
-        @foreach ($platsDecoded['esmorzar'] ?? [] as $platId)
-            {{ \App\Models\Plat::find($platId)->nom ?? 'Plat eliminat' }}@if(! $loop->last), @endif
-        @endforeach
-        @if(empty($platsDecoded['esmorzar'] ?? []))
-            No especificat
-        @endif
-    </li>
-    <li><strong>Dinar:</strong> 
-        @foreach ($platsDecoded['dinar'] ?? [] as $platId)
-            {{ \App\Models\Plat::find($platId)->nom ?? 'Plat eliminat' }}@if(! $loop->last), @endif
-        @endforeach
-        @if(empty($platsDecoded['dinar'] ?? []))
-            No especificat
-        @endif
-    </li>
-    <li><strong>Berenar:</strong> 
-        @foreach ($platsDecoded['berenar'] ?? [] as $platId)
-            {{ \App\Models\Plat::find($platId)->nom ?? 'Plat eliminat' }}@if(! $loop->last), @endif
-        @endforeach
-        @if(empty($platsDecoded['berenar'] ?? []))
-            No especificat
-        @endif
-    </li>
-    <li><strong>Sopar:</strong> 
-        @foreach ($platsDecoded['sopar'] ?? [] as $platId)
-            {{ \App\Models\Plat::find($platId)->nom ?? 'Plat eliminat' }}@if(! $loop->last), @endif
-        @endforeach
-        @if(empty($platsDecoded['sopar'] ?? []))
-            No especificat
-        @endif
-    </li>
-</ul>
-
+                                            <ul>
+                                                @foreach (['esmorzar', 'dinar', 'berenar', 'sopar'] as $menjador)
+                                                    <li>
+                                                        <strong>{{ ucfirst($menjador) }}:</strong>
+                                                        @foreach ($platsDecoded[$menjador] ?? [] as $index => $platId)
+                                                            @php
+                                                                $plat = \App\Models\Plat::find($platId);
+                                                                $elementId = $menjador . '-' . $index;
+                                                            @endphp
+                                                            @if ($plat)
+                                                                <span class="toggle-plat" data-target="{{ $elementId }}" style="cursor:pointer;">
+                                                                    ▶️ {{ $plat->nom }}
+                                                                </span>
+                                                                <div id="{{ $elementId }}" style="display:none; margin-left: 1.5em; margin-top: 0.3em;">
+                                                                    <p><strong>Descripció:</strong> {{ $plat->descripcio }}</p>
+                                                                    <p><strong>Quantitat:</strong> {{ $plat->quantitat }}</p>
+                                                                    <p><strong>Intoleràncies:</strong> {{ is_array($plat->intolerancies) ? implode(', ', $plat->intolerancies) : 'Cap' }}</p>
+                                                                    <p><strong>Vega:</strong> {{ $plat->vega == 1 ? 'Si' : 'No' }}</p>
+                                                                </div>
+                                                                @if (!$loop->last)
+                                                                    , 
+                                                                @endif
+                                                            @else
+                                                                <span>Plat eliminat</span>
+                                                            @endif
+                                                        @endforeach
+                                                    </li>
+                                                @endforeach
+                                            </ul>
                                             <p class="mt-2 text-sm text-gray-500">
                                                 <strong>Nutricionista:</strong> {{ $menu->nutricionista->name ?? 'Desconegut' }}
                                                 <br>
@@ -160,4 +163,5 @@
             </div>
         </div>
     </div>
+    <script src="{{ asset('js/plat-toggle.js') }}"></script>
 </x-app-layout>
