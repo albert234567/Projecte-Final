@@ -12,41 +12,65 @@ use Illuminate\Support\Facades\Hash;
 class ClientController extends Controller
 {
 
-    public function index()
-    {
-        $user = Auth::user();
+public function index()
+{
+    $user = Auth::user();
 
-        // Obtenir els clients creats per aquest nutricionista
-        $clients = User::where('rol', 'client')
-            ->where('created_by_user_id', $user->id)
-            ->get();
+    // Obtenir els clients creats per aquest nutricionista
+    $clients = User::where('rol', 'client')
+        ->where('created_by_user_id', $user->id)
+        ->get();
 
-        // Calcular si ha arribat al límit
-        $haArribatLimitClients = $clients->count() >= 3;
+    // Definir límit segons si és premium o no
+    $limitClients = $user->premium ? 10 : 3;
 
-        // Passar les dades a la vista
-        return view('clients', compact('clients', 'haArribatLimitClients'));
+    // Calcular si ha arribat al límit
+    $haArribatLimitClients = $clients->count() >= $limitClients;
+
+    // Passar les dades a la vista, assegurant que totes les variables existeixen
+    return view('clients', [
+        'clients' => $clients,
+        'haArribatLimitClients' => $haArribatLimitClients,
+        'limitClients' => $limitClients,
+        'user' => $user,
+    ]);
+}
+
+
+
+public function storeClient(Request $request)
+{
+    $user = Auth::user();
+
+    // Comptar clients creats
+    $clientsCount = User::where('rol', 'client')
+        ->where('created_by_user_id', $user->id)
+        ->count();
+
+    $limitClients = $user->premium ? 10 : 3;
+
+    if ($clientsCount >= $limitClients) {
+        return redirect()->route('clients')
+            ->withErrors(['limit' => "Has arribat al límit de $limitClients clients."]);
     }
 
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|string|email|max:255|unique:users',
+        'password' => 'required|string|min:8|confirmed',
+    ]);
 
-        public function storeClient(Request $request)
-    {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8|confirmed',
-        ]);
+    User::create([
+        'name' => $request->name,
+        'email' => $request->email,
+        'password' => Hash::make($request->password),
+        'rol' => 'client',
+        'created_by_user_id' => $user->id,
+    ]);
 
-        User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'rol' => 'client',
-            'created_by_user_id' => Auth::id(), // Assigna l'ID del nutricionista loguejat
-        ]);
+    return redirect()->route('clients')->with('success', 'Client registrat amb èxit.');
+}
 
-        return redirect()->route('clients')->with('success', 'Client registrat amb èxit.');
-    }
 
     public function destroy($id)
 {

@@ -5,26 +5,35 @@
                 <div class="p-6 text-gray-800">
                     <h3 class="text-xl font-semibold mb-4">Els meus clients</h3>
 
-                        @if ($haArribatLimitClients)
-                            <div class="mb-4 p-4 bg-yellow-100 border border-yellow-300 text-yellow-800 rounded-md">
-                                Has arribat al límit de 3 clients. <br>
-                                Augmenta la capacitat de clients amb l'accés <strong>premium per 20€/mes</strong> de <em>Sabor i Salut</em>.
-                            </div>
-                        @else
-                            <div class="inline-flex items-center space-x-2">
-                                <a href="{{ route('clients.register') }}" class="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 focus:outline-none focus:bg-green-600">
-                                    Registrar nou client
-                                </a>
-                                <!-- Emoji info amb tooltip -->
-                                <div class="relative group cursor-pointer">
-                                    <span class="text-blue-500 text-lg select-none">ℹ️</span>
-                                    <div class="absolute left-full top-1/2 -translate-y-1/2 ml-3 w-72 p-3 bg-gray-800 text-white text-sm rounded-md opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-opacity pointer-events-none z-10">
-                                        En aquesta versió només tens un màxim de 3 clients.<br>
-                                        Augmenta la capacitat de clients amb l'accés <strong>premium per 20€/mes</strong> de <em>Sabor i Salut</em>.
-                                    </div>
-                                </div>
-                            </div>
-                        @endif
+@if ($haArribatLimitClients)
+    <div class="mb-4 p-4 bg-yellow-100 border border-yellow-300 text-yellow-800 rounded-md">
+        Has arribat al límit de {{ $limitClients }} clients. <br>
+        @if (!$user->premium)
+            Augmenta la capacitat de clients amb l'accés <strong>premium per 20€/mes</strong> de <em>Sabor i Salut</em>.
+        @else
+            Ja tens accés premium i pots crear fins a {{ $limitClients }} clients.
+        @endif
+    </div>
+@else
+    <div class="inline-flex items-center space-x-2">
+        <a href="{{ route('clients.register') }}" class="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 focus:outline-none focus:bg-green-600">
+            Registrar nou client
+        </a>
+        <!-- Emoji info amb tooltip -->
+        <div class="relative group cursor-pointer">
+            <span class="text-blue-500 text-lg select-none">ℹ️</span>
+            <div class="absolute left-full top-1/2 -translate-y-1/2 ml-3 w-72 p-3 bg-gray-800 text-white text-sm rounded-md opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-opacity pointer-events-none z-10">
+                En aquesta versió només tens un màxim de {{ $limitClients }} clients.<br>
+                @if (!$user->premium)
+                    Augmenta la capacitat de clients amb l'accés <strong>premium per 20€/mes</strong> de <em>Sabor i Salut</em>.
+                @else
+                    Tens accés premium i pots crear fins a {{ $limitClients }} clients.
+                @endif
+            </div>
+        </div>
+    </div>
+@endif
+
 
                     <br><br>
 
