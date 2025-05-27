@@ -51,12 +51,38 @@
                                                                     @foreach ($platsDecoded[$menjador] ?? [] as $index => $platId)
                                                                         @php
                                                                             $plat = \App\Models\Plat::find($platId);
-                                                                            $elementId = $menjador . '-' . $index;
+                                                                            $elementId = $menjador . '-' . $index . '-' . $menu->id;
+
                                                                         @endphp
                                                                         @if ($plat)
-                                                                            <span class="toggle-plat" data-target="{{ $elementId }}" style="cursor:pointer;">
-                                                                                ▶️ {{ $plat->nom }}
-                                                                            </span>
+                                                                        @php
+                                                                            $emojis = '';
+
+                                                                            if ($plat->vega == 1) {
+                                                                                $emojis .= ' 🥬';
+                                                                            }
+
+                                                                            // Convertir intoleràncies a array si cal
+                                                                            $intolerancies = is_array($plat->intolerancies)
+                                                                                ? $plat->intolerancies
+                                                                                : json_decode($plat->intolerancies, true) ?? [];
+
+                                                                            // Afegir emojis només si el plat NO té la intolerància
+                                                                            if (!in_array('Sense lactosa', $intolerancies)) {
+                                                                                $emojis .= ' 🥛';
+                                                                            }
+                                                                            if (!in_array('Sense gluten', $intolerancies)) {
+                                                                                $emojis .= ' 🌾';
+                                                                            }
+                                                                            if (!in_array('Sense fruits secs', $intolerancies)) {
+                                                                                $emojis .= ' 🥜';
+                                                                            }
+                                                                        @endphp
+
+                                                                        <span class="toggle-plat" data-target="{{ $elementId }}" style="cursor:pointer;">
+                                                                            ▶️ {{ $plat->nom }}{!! $emojis !!}
+                                                                        </span>
+
                                                                             <div id="{{ $elementId }}" style="display:none; margin-left: 1.5em; margin-top: 0.3em;">
                                                                                 <p><strong>Descripció:</strong> {{ $plat->descripcio }}</p>
                                                                                 <p><strong>Quantitat:</strong> {{ $plat->quantitat }}</p>
@@ -121,12 +147,37 @@
                                                         @foreach ($platsDecoded[$menjador] ?? [] as $index => $platId)
                                                             @php
                                                                 $plat = \App\Models\Plat::find($platId);
-                                                                $elementId = $menjador . '-' . $index;
+                                                                $elementId = $menjador . '-' . $index . '-' . $menu->id;
                                                             @endphp
                                                             @if ($plat)
-                                                                <span class="toggle-plat" data-target="{{ $elementId }}" style="cursor:pointer;">
-                                                                    ▶️ {{ $plat->nom }}
-                                                                </span>
+                                                                        @php
+                                                                            $emojis = '';
+
+                                                                            if ($plat->vega == 1) {
+                                                                                $emojis .= ' 🥬';
+                                                                            }
+
+                                                                            // Convertir intoleràncies a array si cal
+                                                                            $intolerancies = is_array($plat->intolerancies)
+                                                                                ? $plat->intolerancies
+                                                                                : json_decode($plat->intolerancies, true) ?? [];
+
+                                                                            // Afegir emojis només si el plat NO té la intolerància
+                                                                            if (!in_array('Sense lactosa', $intolerancies)) {
+                                                                                $emojis .= ' 🥛';
+                                                                            }
+                                                                            if (!in_array('Sense gluten', $intolerancies)) {
+                                                                                $emojis .= ' 🌾';
+                                                                            }
+                                                                            if (!in_array('Sense fruits secs', $intolerancies)) {
+                                                                                $emojis .= ' 🥜';
+                                                                            }
+                                                                        @endphp
+
+                                                                        <span class="toggle-plat" data-target="{{ $elementId }}" style="cursor:pointer;">
+                                                                            ▶️ {{ $plat->nom }}{!! $emojis !!}
+                                                                        </span>
+
                                                                 <div id="{{ $elementId }}" style="display:none; margin-left: 1.5em; margin-top: 0.3em;">
                                                                     <p><strong>Descripció:</strong> {{ $plat->descripcio }}</p>
                                                                     <p><strong>Quantitat:</strong> {{ $plat->quantitat }}</p>

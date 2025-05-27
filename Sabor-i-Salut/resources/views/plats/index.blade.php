@@ -69,8 +69,32 @@
                                 <li class="p-4 border border-gray-200 rounded-md shadow-sm bg-white flex justify-between items-start">
                                     <div>
                                         <h4 class="text-md font-semibold text-green-700">
-                                                {{ $plat->nom }}
-                                                @if($plat->quantitat)
+                                                @php
+                                                    $emojis = '';
+
+                                                    if ($plat->vega == 1) {
+                                                        $emojis .= ' 🥬';
+                                                    }
+
+                                                    // Convertir intoleràncies a array si cal
+                                                    $intolerancies = is_array($plat->intolerancies)
+                                                        ? $plat->intolerancies
+                                                        : json_decode($plat->intolerancies, true) ?? [];
+
+                                                    // Afegir emojis només si el plat NO té la intolerància
+                                                    if (!in_array('Sense lactosa', $intolerancies)) {
+                                                        $emojis .= ' 🥛';
+                                                    }
+                                                    if (!in_array('Sense gluten', $intolerancies)) {
+                                                        $emojis .= ' 🌾';
+                                                    }
+                                                    if (!in_array('Sense fruits secs', $intolerancies)) {
+                                                        $emojis .= ' 🥜';
+                                                    }
+                                                @endphp
+
+                                                    {{ $plat->nom }}{!! $emojis !!}
+                                                    @if($plat->quantitat)
                                                     <span class="text-sm text-gray-500">({{ $plat->quantitat }})</span>
                                                 @endif
                                             </h4>
