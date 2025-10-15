@@ -113,8 +113,7 @@
     <div class="auth-container">
         <h2>Registra els teus clients</h2>
         <form method="POST" action="{{ route('clients.store') }}">
-            <!-- CSRF Token -->
-            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+            @csrf
 
             <div class="form-group">
                 <label for="name">Nom</label>
@@ -137,18 +136,16 @@
             </div>
 
             <input type="hidden" name="rol" value="client">
-            
 
-            <div class="form-group" method="POST" action="{{ route('clients.store') }}">
+            <div class="form-group">
                 <button type="submit" class="btn-primary">Registrar client</button>
             </div>
-
         </form>
 
         <!-- Enllaços per a altres pàgines -->
         <div class="link-container">
-            <a href="/">⬅️Anar a la Benvinguda</a>
-            <a href="/login">Inicia Sessió➡️</a>
+            <a href="{{ url('/') }}">⬅️ Anar a la Benvinguda</a>
+            <a href="{{ url('/login') }}">Inicia Sessió ➡️</a>
         </div>
     </div>
 

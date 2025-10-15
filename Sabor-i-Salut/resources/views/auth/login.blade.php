@@ -106,16 +106,15 @@
         .link-container a:hover {
             background-color: rgb(200, 100, 20);
         }
-        </style>
+    </style>
 </head>
 <body>
 
     <!-- Formulari de Login -->
     <div class="auth-container">
         <h2>Inicia Sessió</h2>
-        <form method="POST" action="/login">
-            <!-- CSRF Token -->
-            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+        <form method="POST" action="{{ url('/login') }}">
+            @csrf
 
             <div class="form-group">
                 <label for="email">Email</label>
@@ -132,11 +131,11 @@
             </div>
         </form>
 
-            <br>
+        <br>
 
         <div class="link-container">
-            <a href="/">⬅️ Anar a la Benvinguda</a>
-            <a href="/register">Registrar-se➡️</a>
+            <a href="{{ url('/') }}">⬅️ Anar a la Benvinguda</a>
+            <a href="{{ url('/register') }}">Registrar-se ➡️</a>
         </div>
     </div>
 
